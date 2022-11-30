@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('cursor-listener',{
+            init:function(){
+                var newcolor="green";
+                this.el.addEventListener("fusing", function(e){
+                    this.setAttribute('material','color', newcolor);
+                });
+                this.el.addEventListener("click", function(e){
+                    this.setAttribute('material','color', "yellow");
+                });
+            }
+        });
+    </script>
+    
+    <script>
+    AFRAME.registerComponent('change-site', {
+        schema:{
+            img:{
+                type:'string'}}, init:function(){
+                    var data = this.data;
+                    var el = this.el;
+                    el.addEventListener("mouseenter",function(){
+                        var mySky = document.querySelector("#my-sky");
+                        mySky.setAttribute("src",data.img);
+                    });
+                }
+       });
+    </script>
+
+
+    <script id="link" type="text/html">
+        <a-entity class="link"
+          sound="on: click; src: #click-sound"></script>
+  </head>
+  <body>
+    <a-scene>
+
+
+
+        <a-assets inspector="url:https://aframe.io/releases/0.3.0/aframe-inspector.min.js%22%3E">
+            <img id="fondo" src="Imagen/saxaiwaman_360.jpg" >
+            <img id ="img-saxaiwaman-2" src="Imagen/saxaiwaman_360_2.jpg" alt="img-saxaiwaman-2">
+            <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
+            <img id="mesa" src="Imagen/TexturesCom_Cathedral_Tiles_header.jpg">
+            <img id="palo" src="Imagen/TexturesCom_Brushed_Steel_header.jpg">
+            <a-sound id="sound" src="fondo.mp3" autoplay="true" position="0 2 5" sound=""></a-sound>
+            <img id="cabeza" src="Imagen/cabeza_clava.jpg">
+            <img id="basura" src="Imagen/basura.png">
+            <a-sound id="sound" src="fondo.mp3" autoplay="true" position="0 2 5" sound=""></a-sound>
+            <a-assets-item id="pilar" src="pilar/scene.gltf">
+            </a-assets-item>
+            <a-assets-item id="tronco" src="tronco/scene.gltf">
+            </a-assets-item>
+            <a-assets-item id="arbol" src="arbol/scene.gltf">
+            </a-assets-item>
+        </a-assets>
+        <a-camera>
+          <a-cursor raycaster="objects: .clickable"></a-cursor> 
+        </a-camera>
+
+        <a-plane color="black" position="0 1.3 -6" width="3" 
+        height="0.25" class = "clickable" change-site="img:#fondo">
+         <a-text value="Saqsaywaman" color ="white" 
+        align="center"></a-text>
+        </a-plane>
+
+        <a-plane color="black" position="70 1.3 -5"  width="25" rotation="0 -93 0"
+        height="5" class="clickable" change-site="img:#img-saxaiwaman-2" sound="on; mouseenter; src:#sonido">
+         <a-text value="Saqsaywaman - Colina" width="40" height="20" color="white" 
+        align="center" > 
+        
+      </a-text>
+         </a-plane>
+        
+
+        <a-entity sound="src:#sonido"></a-entity>
+        <a-sky id="my-sky" src="#fondo"></a-sky>
+        <a-entity camera look-controls position="0 0 6" user-height="0">
+          <a-entity cursor="fuse:true; fuseTimeout:1000"
+          position="0 0 -2"
+          geometry="primitive:ring;radiusInner:0.03;radiusOuter:0.04">
+          </a-entity>
+          <a-cursor raycaster="objects: .clickable"></a-cursor>
+     </a-entity>
+        <a-sphere   src="#cabeza" position="-114 -4.82 -46.03" radius="10" color="#F29F05">
+            <a-animation attribute="rotation" dur="1500" from="0 0 0" to="0 0 360" repeat="10000" delay="0" easing="linear">
+            </a-animation>
+        </a-sphere>
+        <a-box src="#mesa" position="-110 -25.22 -44.98"  height="20" width="20" depth="66.8" color="#90AFC4">
+        </a-box>
+        <a-box src="#palo" position="-170 -7.67 106.9"  height="100" width="5" depth="5" color="#90AFC4">
+        </a-box>
+        <a-text value="No tirar basura" color="black" align="center" rotation="0 90 0" position="-6.69 1.240 4.25"></a-text>
+        <a-box position="-168 13.06 107.9"  height="50" width="5" depth="55" color="#ffffff">
+        </a-box>
+        <a-box src="#basura" position="-164 7.69 104.3"  height="30" width="0.5" depth="30" color="#ffffff"></a-box>
+        <a-entity gltf-model="#pilar"  modify-materials
+          position="-25.5 -4.16 0.79"  scale="3 3 3"></a-entity>
+        <a-entity gltf-model="#tronco"  modify-materials
+          position="388.4 -108.78 340.4"  scale="1 1 1"></a-entity>
+        <a-entity gltf-model="#arbol"  modify-materials
+          position="371.0 -148.92 1265.94"  scale="0.2 0.2 0.2"></a-entity>
+    </a-scene>
+  </body>
+</html>
